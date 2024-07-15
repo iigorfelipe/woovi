@@ -3,7 +3,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { PaymentMethodPage } from './pages/payment-method';
-import { PixCreditCard } from "./pages/pix+credit-card";
+import { PixCreditCardPage } from "./pages/pix+credit-card";
 import { Layout } from "./pages/layout";
 
 const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/pix+credit-card",
-        element: <PixCreditCard />,
+        element: <PixCreditCardPage />,
       },
     ],
   },
