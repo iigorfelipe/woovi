@@ -14,12 +14,12 @@ const schema = z.object({
 })
 
 const payments = [
+  'Streamings: 79.99',
   'Pizza Top: 150',
-  'Streamings: 179.99',
-  'Plano de Saúde: 550',
-  'wCar: 3900',
-  'wSchool: 18280.12',
-  'Pacote de Viagem: 30500',
+  'Plano de Saúde: 910',
+  'wSchool: 8280.12',
+  'wCar: 33912.79',
+  'Pacote de Viagem: 50500',
 ]
 
 export const HomePage = () => {

@@ -1,9 +1,12 @@
-import { useState } from 'react';
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
-import { z } from 'zod';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { z } from 'zod';
+import { usePaymentContex } from '../../contexts/payment';
+import { formatToBRL } from '../../helpers/formatToBRL';
+import { generateInstallments } from '../../helpers/generate-iInstallments';
 
 const schema = z.object({
   name: z.string()
@@ -16,15 +19,11 @@ const schema = z.object({
   installments: z.string().min(1, 'Selecione o número de parcelas'),
 });
 
-const installmentsFake = [
-  '1x de R$ 15.300,00',
-  '2x de R$ 7.650,00',
-  '3x de R$ 5.100,00',
-  '4x de R$ 3.825,00',
-]
 
 export const SecondStepWithCreditCard = () => {
   const navigate = useNavigate();
+  const [installmentsCreditCard, setInstallmentsCreditCard] = useState<string[]>([]);
+  const { user } = usePaymentContex();
 
   const [cardNumber, setCardNumber] = useState('');
   const [cvv, setCvv] = useState('');
@@ -40,6 +39,15 @@ export const SecondStepWithCreditCard = () => {
     cvv: '',
     installments: '',
   });
+
+  useEffect(() => {
+    if (user.payment.installment) {
+      const { total, amount} = user.payment.installment;
+      setInstallmentsCreditCard(generateInstallments(total! - amount).map((installment) => {
+        return `${installment.times} de ${formatToBRL(installment.amount)}`
+      }))      
+    }
+  }, []);
 
   const handlePayment = () => {
     const data = {
@@ -203,7 +211,7 @@ export const SecondStepWithCreditCard = () => {
           sx={{ minWidth: 120 }}
         >
           {
-            installmentsFake.map((installment) => (
+            installmentsCreditCard.map((installment) => (
               <MenuItem key={installment} value={installment}>{installment}</MenuItem>
             ))
           }
