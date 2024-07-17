@@ -11,6 +11,7 @@
 - TypeScript
 - React - `Vite (react-ts)`
 - Tailwindcss
+- Material UI
 - Zod
 
 ## Executando o Projeto Localmente
