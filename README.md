@@ -1,8 +1,10 @@
-<div style="display: flex; gap: 20px;">
-  <img src="https://github.com/user-attachments/assets/fde076f8-8091-43b6-bb3f-12e52c87725d" />
-  <img src="https://github.com/user-attachments/assets/75deeff4-d953-4dea-9056-9c8c1e3f4c98" />
-  <img src="https://github.com/user-attachments/assets/21623cc1-a118-457d-a0cc-aa6cc55c4968" />
-</div>
+### Desafio: Replicar o seguinte design:
+  <img src="https://github.com/user-attachments/assets/ac19eac4-f9f1-4403-9163-df61fab44e8c" />
+
+<br />
+<br />
+
+# [Clique aqui para ver o resultado](https://iigorfelipe.github.io/woovi/)
 
 ## Tecnologias Utilizadas
 
