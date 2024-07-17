@@ -1,45 +1,82 @@
-
-import { Timeline } from "../../components/timeline"
-import { copyToClipboard } from "../../helpers/copy-to-clipboard"
+import { useEffect, useState } from "react";
+import { CountdownTimer } from "../../components/countdown-timer";
+import { Timeline, TimelineEvent } from "../../components/timeline";
+import { usePaymentContex } from "../../contexts/payment";
+import { formatToBRL } from "../../helpers/formatToBRL";
+import { FirstStepWitgQrCode } from "./first-step-with-qr-code";
+import { HowItWorks } from "./how-to-work";
+import { SecondStepWithCreditCard } from "./second-step-with-credit-card";
 
 export const PixCreditCardPage = () => {
+  const { user, currentPaymentStep, handleCurrentPaymentStep } = usePaymentContex();
+
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>([]);
+
+
+  useEffect(() => {
+    const { times, amount, total } = user.payment.installment!;
+    if (user.payment.installment) {
+
+      const events = [
+        {
+          label: `1ª ${times === 1 ? 'à vista' : 'entrada'} no Pix`,
+          value: formatToBRL(amount),
+          isCurrentStep: true,
+          isCompletedStep: false
+        },
+        times > 1 && {
+          label: '2ª no cartão',
+          value: formatToBRL(total! - amount),
+          isCurrentStep: false,
+          isCompletedStep: false
+        }
+      ].filter(Boolean) as TimelineEvent[];
+  
+      setTimelineEvents(events);
+    }
+  }, [user.payment.installment]);
+
+
+
+  const handleEvents = (selectedIndex: number) => {
+    const newTimelineEvents = timelineEvents.map((event, index) => {
+
+      return {
+        ...event,
+        isCurrentStep: index === selectedIndex,
+        isCompletedStep: index < selectedIndex,
+      }
+    });
+
+    setTimelineEvents(newTimelineEvents);
+    handleCurrentPaymentStep(1)
+  };
+
   return (
-    <div className="flex items-center flex-col gap-5 justify-center">
+    <div className="flex items-center flex-col gap-5 justify-center w-full xs:w-[464px]">
       
-      <div className="text-2xl font-extrabold leading-8 text-center flex flex-col">
-        <span>João, pague a entrada de</span>
-        <span>R$ 15.300,00 pelo Pix</span>
-      </div>
+      {
+        currentPaymentStep === 0
+          ? <FirstStepWitgQrCode handleEvents={handleEvents} />
+          : <SecondStepWithCreditCard />
+      }
 
-      <div className="min-w-[350px] min-h-[350px] border-2 border-[#03D69D] rounded-xl p-1">
-        <img src="./qr-code.svg" alt="qr-code" />
-      </div>
+      <CountdownTimer />
 
-      <button onClick={() => copyToClipboard('QR-CODE-EXAMPLE')} className="bg-[#133A6F] flex items-center justify-center gap-2 w-72 h-10 rounded-lg">
-        <span className="normal-case text-white text-base">Cique para copiar QR CODE</span>
-        <img src="./note.svg" />
-      </button>
-
-      <div className=" text-center flex flex-col text-base">
-        <span className="font-semibold text-[#AFAFAF]">Prazo de pagamento:</span>
-        <span className="font-extrabold text-[#4D4D4D]">15/12/2021 - 08:17</span>
-      </div>
-
-      <Timeline />
+      <Timeline events={timelineEvents} />
 
       <div className="border-t-2 border-[#E5E5E5] w-full" />
 
       <div className="flex items-center justify-between w-full">
         <span className="text-sm font-semibold">CET: 0,5%</span>
-        <span className="text-lg font-semibold">Total: R$ 30.600,00</span>
+        <span className="text-lg font-semibold">
+          Total: {formatToBRL(user.payment.installment?.total!)}
+        </span>
       </div>
 
       <div className="border-t-2 border-[#E5E5E5] w-full" />
 
-      <div className="flex items-center justify-between w-full">
-        <span className="font-extrabold text-base">Como funciona?</span>
-        <img src="./arrow-up.svg" className="mr-2" />
-      </div>
+      <HowItWorks />
 
       <div className="border-t-2 border-[#E5E5E5] w-full" />
 

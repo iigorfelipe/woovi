@@ -1,22 +1,25 @@
-import { Parcelas } from "../../data/parcelas";
+import { usePaymentContex } from "../../contexts/payment";
+import { formatToBRL } from "../../helpers/formatToBRL";
 
 type CardProps = {
-  parcelas: Parcelas;
   handleChecked: (index: number) => void;
+  navigateToPaymentPage: () => void;
 }
 
-export const Cards = ({ parcelas, handleChecked }: CardProps) => {
+export const Cards = ({  handleChecked, navigateToPaymentPage }: CardProps) => {
+
+  const { installments } = usePaymentContex();
 
   return (
-    <div className="rounded-[10px] flex flex-col w-full mt-4">
+    <div className="rounded-[10px] flex flex-col w-full xs:w-[464px] mt-4">
       {
-        parcelas.map((parcela, index) => (
+        installments.map((installment, index) => (
           <div
-            key={parcela.vezes}
+            key={installment.times}
             className={`gap-1 flex flex-col p-4 border-2 border-b-0 last-of-type:border-2 first-of-type:rounded-lg last-of-type:rounded-b-lg [&:nth-child(2)]:rounded-t-lg ${
               index === 0 && 'mb-6 border-b-[2px]'
             } ${
-              parcela.isChecked
+              installment.isChecked
               ? 'border-b-[2px] border-[#03D69D]'
               : 'border-[#E5E5E5]'
             }`}
@@ -36,39 +39,54 @@ export const Cards = ({ parcelas, handleChecked }: CardProps) => {
               )
             }
             <div className="flex items-center justify-center">
-              <span className="text-2xl font-semibold"><span className="font-extrabold">{parcela.vezes}</span> {parcela.valor}</span>
-              <button
-                className={`cursor-pointer flex items-center justify-center rounded-full w-[26px] h-[26px] ml-auto ${parcela.isChecked ? 'bg-[#03D69D]' : 'none'} ${parcela.isChecked ? 'border-0' : 'border-2'}`}
-                onClick={() => handleChecked(index)}
-              >
-                <img src="./checked.svg" alt="checked" />
-              </button>
+              <span className="text-2xl font-semibold"><span className="font-extrabold">{installment.times}x</span> {formatToBRL(installment.amount)}</span>
+
+              <div className="ml-auto flex items-center gap-2">
+                {
+                  installments[index].isChecked && (
+                    <button
+                      className="cursor-pointer flex items-center bg-[#133A6F] rounded-lg text-white py-1 px-2 font-semibold text-sm"
+                      onClick={navigateToPaymentPage}
+                    >
+                      Confirmar
+                    </button>
+                  )
+                }
+                <button
+                  className={`cursor-pointer flex items-center justify-center rounded-full w-[26px] h-[26px] ${installment.isChecked ? 'bg-[#03D69D]' : 'none'} ${installment.isChecked ? 'border-0' : 'border-2'}`}
+                  onClick={() => handleChecked(index)}
+                >
+                  <img src="./checked.svg" alt="checked" />
+                </button>
+              </div>
             </div>
             {
-              parcela.cashBack?.desconto ? (
+              installment.cashBack?.discount ? (
                 <>
-                  <span className="font-semibold text-base text-[#03D69D]">Ganhe <span className="font-extrabold">{parcela.cashBack.desconto}</span> de Cashback</span>
-                  <div className="bg-[#133A6F] flex items-center p-2 rounded-md">
-                    <span className="text-white font-semibold text-base">
+                  <span className="font-semibold text-base text-[#03D69D]">Ganhe <span className="font-extrabold">{installment.cashBack.discount}</span> de Cashback</span>
+                  <div className="flex items-center justify-start p-2 relative">
+                    <img src="./tape.png" alt="tape" className="absolute h-8 -z-10 flex-1 w-full left-0" />
+                    <span className="text-white font-semibold text-sm 3xs:text-base pr-7 xs:pr-0">
                       <span className="font-extrabold">
-                        {parcela.cashBack.message.slice(0, 12)}
+                        {installment.cashBack.message.slice(0, 12)}
                       </span>
-                        {parcela.cashBack.message.slice(12)}
+                        {installment.cashBack.message.slice(12)}
                     </span>
                   </div>
                 </>
               ) : (
-                <span className="text-[#AFAFAF] text-base">Total: {parcela.total}</span>
+                <span className="text-[#AFAFAF] text-base">Total: {formatToBRL(installment.total!)}</span>
               )
             }
             {
-              parcela.menorJuros?.desconto && (
-                <div className="bg-[#133A6F] flex items-center p-2 rounded-md">
-                  <span className="text-white font-semibold text-base">
+              installment.lowerInterest?.discount && (
+                <div className="flex items-center justify-start p-2 relative">
+                  <img src="./tape.png" alt="tape" className="absolute h-8 -z-10 flex-1 w-full left-0" />
+                  <span className="text-white font-semibold text-[12px] xs:text-base pr-7 xs:pr-0">
                     <span className="font-extrabold">
-                      {parcela.menorJuros.desconto} de juros: {''}
+                      {installment.lowerInterest?.discount} de juros: {''}
                     </span>
-                    {parcela.menorJuros.message}
+                    {installment.lowerInterest.message}
                   </span>
                 </div>
               )
