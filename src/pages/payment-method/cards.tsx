@@ -66,7 +66,7 @@ export const Cards = ({  handleChecked, navigateToPaymentPage }: CardProps) => {
                   <span className="font-semibold text-base text-[#03D69D]">Ganhe <span className="font-extrabold">{installment.cashBack.discount}</span> de Cashback</span>
                   <div className="flex items-center justify-start p-2 relative">
                     <img src="./woovi/tape.png" alt="tape" className="absolute h-8 -z-10 flex-1 w-full left-0" />
-                    <span className="text-white font-semibold text-sm 3xs:text-base pr-7 xs:pr-0">
+                    <span className="text-white font-semibold text-[12px] xs:text-base pr-7 xs:pr-0">
                       <span className="font-extrabold">
                         {installment.cashBack.message.slice(0, 12)}
                       </span>
