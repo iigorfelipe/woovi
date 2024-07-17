@@ -2,14 +2,22 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { PaymentProvider } from "./contexts/payment/provider";
+import { HomePage } from "./pages/home";
+import { Layout } from "./pages/layout";
 import { PaymentMethodPage } from './pages/payment-method';
 import { PixCreditCardPage } from "./pages/pix+credit-card";
-import { Layout } from "./pages/layout";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
       {
         path: "/payment-method",
         element: <PaymentMethodPage />,
@@ -23,5 +31,14 @@ const router = createBrowserRouter([
 ]);
 
 export const App = () => {
-  return <RouterProvider router={router} />
+
+  return (
+    <PaymentProvider>
+      <RouterProvider router={router} />
+      <ToastContainer
+        position="top-center"
+        theme="light"
+      />
+    </PaymentProvider>
+  )
 }
