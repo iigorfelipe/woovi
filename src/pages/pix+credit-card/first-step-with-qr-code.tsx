@@ -1,8 +1,13 @@
 import { toast } from "react-toastify";
 import { usePaymentContex } from "../../contexts/payment";
 import { formatToBRL } from "../../helpers/formatToBRL";
+import { useNavigate } from "react-router-dom";
 
 const URL = 'https://www.linkedin.com/in/iigor-felipe/';
+
+const feedback1 = `Pagamento realizado com sucesso!
+Você será redirecionado a página inicial.`;
+const feedback2 = 'Pagamento via Pix realizado!';
 
 type props = {
   handleEvents: (selectedIndex: number) => void
@@ -11,7 +16,14 @@ type props = {
 export const FirstStepWitgQrCode = ({
   handleEvents
 }: props) => {
+  const navigate = useNavigate();
   const { user } = usePaymentContex();
+
+  const handleCloseToast = () => {
+    user.payment.installment?.times === 1
+     ? navigate('/woovi')
+     :  handleEvents(1);
+  };
 
   const handleCopyQrCode = () => {
     
@@ -21,12 +33,12 @@ export const FirstStepWitgQrCode = ({
 
     setTimeout(() => {
       toast.update(toastId, {
-        render: "Pagamento via Pix realizado!",
+        render: user.payment.installment?.times === 1 ? feedback1 : feedback2,
         type: "success",
         isLoading: false,
         autoClose: 1500,
         closeButton: true,
-        onClose: () => handleEvents(1),
+        onClose: handleCloseToast,
       });
 
     }, 3200);
