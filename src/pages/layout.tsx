@@ -10,7 +10,7 @@ export const Layout = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="flex items-center flex-col gap-2 p-3">
+      <div className="flex items-center flex-col gap-2 p-3 w-full xs:w-[464px]">
         <Header />
           <Outlet />
         <Footer />
