@@ -4,7 +4,7 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const navigateToThePaymentMethodPage = () => {
-    navigate('/')
+    navigate('/woovi')
   };
 
   return (

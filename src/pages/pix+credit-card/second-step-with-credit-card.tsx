@@ -63,7 +63,7 @@ export const SecondStepWithCreditCard = () => {
           type: "success",
           isLoading: false,
           autoClose: 3500,
-          onClose: () => navigate('/'),
+          onClose: () => navigate('/woovi'),
         });
   
       }, 3200);

@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/",
+        path: "/woovi",
         element: <HomePage />,
       },
       {

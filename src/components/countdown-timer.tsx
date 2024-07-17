@@ -15,7 +15,7 @@ export const CountdownTimer = () => {
           return prevTime - 1;
         } else {
           clearInterval(timer);
-          navigate('/');
+          navigate('/woovi');
           return 0;
         }
       });
