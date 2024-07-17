@@ -56,7 +56,7 @@ export const Cards = ({  handleChecked, navigateToPaymentPage }: CardProps) => {
                   className={`cursor-pointer flex items-center justify-center rounded-full w-[26px] h-[26px] ${installment.isChecked ? 'bg-[#03D69D]' : 'none'} ${installment.isChecked ? 'border-0' : 'border-2'}`}
                   onClick={() => handleChecked(index)}
                 >
-                  <img src="./checked.svg" alt="checked" />
+                  <img src="./woovi/checked.svg" alt="checked" />
                 </button>
               </div>
             </div>
@@ -65,7 +65,7 @@ export const Cards = ({  handleChecked, navigateToPaymentPage }: CardProps) => {
                 <>
                   <span className="font-semibold text-base text-[#03D69D]">Ganhe <span className="font-extrabold">{installment.cashBack.discount}</span> de Cashback</span>
                   <div className="flex items-center justify-start p-2 relative">
-                    <img src="./tape.png" alt="tape" className="absolute h-8 -z-10 flex-1 w-full left-0" />
+                    <img src="./woovi/tape.png" alt="tape" className="absolute h-8 -z-10 flex-1 w-full left-0" />
                     <span className="text-white font-semibold text-sm 3xs:text-base pr-7 xs:pr-0">
                       <span className="font-extrabold">
                         {installment.cashBack.message.slice(0, 12)}
@@ -81,7 +81,7 @@ export const Cards = ({  handleChecked, navigateToPaymentPage }: CardProps) => {
             {
               installment.lowerInterest?.discount && (
                 <div className="flex items-center justify-start p-2 relative">
-                  <img src="./tape.png" alt="tape" className="absolute h-8 -z-10 flex-1 w-full left-0" />
+                  <img src="./woovi/tape.png" alt="tape" className="absolute h-8 -z-10 flex-1 w-full left-0" />
                   <span className="text-white font-semibold text-[12px] xs:text-base pr-7 xs:pr-0">
                     <span className="font-extrabold">
                       {installment.lowerInterest?.discount} de juros: {''}

@@ -25,7 +25,7 @@ export const Timeline = ({ events }: TimeLineProps) => {
             <div className={`w-4 h-4 border-2 rounded-full z-10 flex items-center justify-center ${
               event.isCurrentStep ? 'border-green-500' : 'border-gray-300'
             } ${event.isCompletedStep ? 'bg-green-500 border-green-500' : 'bg-white'}`}>
-              {event.isCompletedStep && (<img src="./checked.svg" className="w-[7px] h-1.5" />)}
+              {event.isCompletedStep && (<img src="./woovi/checked.svg" className="w-[7px] h-1.5" />)}
             </div>
 
             <time className="text-lg font-semibold leading-none text-[#4D4D4D]">

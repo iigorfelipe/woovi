@@ -40,12 +40,12 @@ export const FirstStepWitgQrCode = ({
       </div>
 
       <div className="border-2 border-[#03D69D] rounded-xl p-1">
-        <img src="./qr-code.png" alt="qr-code" className="max-w-[332px] max-h-[332px]"/>
+        <img src="./woovi/qr-code.png" alt="qr-code" className="max-w-[332px] max-h-[332px]"/>
       </div>
 
       <button onClick={handleCopyQrCode} className="bg-[#133A6F] flex items-center justify-center gap-2 w-72 h-10 rounded-lg">
         <span className="normal-case text-white text-base">Cique para copiar QR CODE</span>
-        <img src="./note.svg" alt="note" />
+        <img src="./woovi/note.svg" alt="note" />
       </button>
     </div>
   )
