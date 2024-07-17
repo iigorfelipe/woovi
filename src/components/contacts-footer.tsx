@@ -40,14 +40,15 @@ export const ContactsFooter = () => {
         gap: '1rem',
         p: '1rem',
         alignItems: 'center',
-        mt: '5rem'
       }}
     >
 
       <Box
         sx={{
-          display: 'flex',
-          gap: '10px',
+          display: 'flex',          
+          justifyContent: 'center',
+          width: '100%',
+          gap: '1.2rem'
         }}
       >
 
